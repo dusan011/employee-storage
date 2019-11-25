@@ -7,7 +7,7 @@ The project was done using MERN Stack. For the database I choose MongoDB and the
 Frontend: React, Bootstrap
 Backend: NodeJS, Express and MongoDB
 
-###FRONTEND
+##FRONTEND
 First, please clone it localy and enter "ebf-task" folder. Inside the folder you need to install all frontend dependencies that are being used in the project:
 
 ### `npm install`
@@ -22,7 +22,7 @@ The page will reload if you make edits.<br />
 
 For calling backend endpoints, I used axios library.
 
-###BACKEND
+##BACKEND
 Inside "ebf-task" folder, there is a folder called "backend". First install all backend dependencies:
 
 ### "npm install"
