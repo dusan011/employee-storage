@@ -9,7 +9,7 @@ Backend: NodeJS, Express and MongoDB
 
 ### `FRONTEND`
 
-First, please clone it localy and enter "ebf-task" folder. Inside the folder you need to install all frontend dependencies that are being used in the project:
+First, please clone it locally and enter "ebf-task" folder. Inside the folder you need to install all frontend dependencies that are being used in the project:
 
 ### `npm install`
 
