@@ -5,6 +5,7 @@ export default class EditExercise extends Component {
   constructor(props) {
     super(props);
 
+    this.onChangeCompanyName = this.onChangeCompanyName.bind(this);
     this.onChangeName = this.onChangeName.bind(this);
     this.onChangeSurname = this.onChangeSurname.bind(this);
     this.onChangeEmail = this.onChangeEmail.bind(this);
@@ -13,11 +14,13 @@ export default class EditExercise extends Component {
     this.onSubmit = this.onSubmit.bind(this);
 
     this.state = {
+      companyName: "",
       name: "",
       surname: "",
       email: "",
       address: "",
-      salary: 0
+      salary: 0,
+      companies: []
     };
   }
   componentDidMount() {
@@ -25,6 +28,7 @@ export default class EditExercise extends Component {
       .get("http://localhost:5000/employees/" + this.props.match.params.id)
       .then(response => {
         this.setState({
+          companyName: response.data.companyName,
           name: response.data.name,
           surname: response.data.surname,
           email: response.data.email,
@@ -35,6 +39,25 @@ export default class EditExercise extends Component {
       .catch(function(error) {
         console.log(error);
       });
+
+    axios
+      .get("http://localhost:5000/companies/")
+      .then(response => {
+        if (response.data.length > 0) {
+          this.setState({
+            companies: response.data.map(company => company.companyName)
+          });
+        }
+      })
+      .catch(error => {
+        console.log(error);
+      });
+  }
+
+  onChangeCompanyName(e) {
+    this.setState({
+      companyName: e.target.value
+    });
   }
 
   onChangeName(e) {
@@ -71,6 +94,7 @@ export default class EditExercise extends Component {
     e.preventDefault();
 
     const employee = {
+      companyName: this.state.companyName,
       name: this.state.name,
       surname: this.state.surname,
       email: this.state.email,
@@ -95,6 +119,24 @@ export default class EditExercise extends Component {
       <div>
         <h3>Edit Employee Information</h3>
         <form onSubmit={this.onSubmit}>
+          <div className="form-group">
+            <label>Company Name: </label>
+            <select
+              ref="userInput"
+              required
+              className="form-control"
+              value={this.state.companyName}
+              onChange={this.onChangeCompanyName}
+            >
+              {this.state.companies.map(function(company) {
+                return (
+                  <option key={company} value={company}>
+                    {company}
+                  </option>
+                );
+              })}
+            </select>
+          </div>
           <div className="form-group">
             <label>Name: </label>
             <input

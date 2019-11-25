@@ -4,6 +4,7 @@ import axios from "axios";
 
 const Employee = props => (
   <tr>
+    <td>{props.employee.companyName}</td>
     <td>{props.employee.name}</td>
     <td>{props.employee.surname}</td>
     <td>{props.employee.email}</td>
@@ -70,10 +71,11 @@ export default class EmployeesList extends Component {
   render() {
     return (
       <div>
-        <h3>Logged Exercises</h3>
+        <h3>All Employees</h3>
         <table className="table">
           <thead className="thead-light">
             <tr>
+              <th>Company Name</th>
               <th>Name</th>
               <th>Surname</th>
               <th>Email</th>

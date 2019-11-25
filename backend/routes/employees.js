@@ -4,13 +4,14 @@ let Employee = require("../models/employee.model");
 //GET ALL EMPLOYEES
 router.route("/").get((req, res) => {
   Employee.find()
-    .select("_id name surname email address salary")
+    .select("_id name surname email address salary companyName")
     .then(employees => res.json(employees))
     .catch(err => res.status(400).json("Error: " + err));
 });
 
 //ADD new employee
 router.route("/add").post((req, res) => {
+  const companyName = req.body.companyName;
   const name = req.body.name;
   const surname = req.body.surname;
   const email = req.body.email;
@@ -18,6 +19,7 @@ router.route("/add").post((req, res) => {
   const salary = Number(req.body.salary);
 
   const newEmployee = new Employee({
+    companyName,
     name,
     surname,
     email,
@@ -34,7 +36,7 @@ router.route("/add").post((req, res) => {
 //GET SINGLE EMPLOYEE
 router.route("/:id").get((req, res) => {
   Employee.findById(req.params.id)
-    .select("_id name surname email address salary")
+    .select("_id name surname email address salary companyName")
     .then(employee => res.json(employee))
     .catch(err => res.status(400).json("Error: " + err));
 });
@@ -50,6 +52,7 @@ router.route("/:id").delete((req, res) => {
 router.route("/update/:id").post((req, res) => {
   Employee.findById(req.params.id)
     .then(employee => {
+      employee.companyName = req.body.companyName;
       employee.name = req.body.name;
       employee.surname = req.body.surname;
       employee.email = req.body.email;

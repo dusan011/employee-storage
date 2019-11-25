@@ -5,6 +5,7 @@ export default class AddEmployee extends Component {
   constructor(props) {
     super(props);
 
+    this.onChangeCompanyName = this.onChangeCompanyName.bind(this);
     this.onChangeName = this.onChangeName.bind(this);
     this.onChangeSurname = this.onChangeSurname.bind(this);
     this.onChangeEmail = this.onChangeEmail.bind(this);
@@ -17,8 +18,31 @@ export default class AddEmployee extends Component {
       surname: "",
       email: "",
       address: "",
-      salary: 0
+      salary: 0,
+      companyNames: []
     };
+  }
+
+  componentDidMount() {
+    axios
+      .get("http://localhost:5000/companies/")
+      .then(response => {
+        if (response.data.length > 0) {
+          this.setState({
+            companyNames: response.data.map(company => company.companyName),
+            companyName: response.data[0].companyName
+          });
+        }
+      })
+      .catch(error => {
+        console.log(error);
+      });
+  }
+
+  onChangeCompanyName(e) {
+    this.setState({
+      companyName: e.target.value
+    });
   }
 
   onChangeName(e) {
@@ -55,6 +79,7 @@ export default class AddEmployee extends Component {
     e.preventDefault();
 
     const employee = {
+      companyName: this.state.companyName,
       name: this.state.name,
       surname: this.state.surname,
       email: this.state.email,
@@ -76,6 +101,24 @@ export default class AddEmployee extends Component {
       <div>
         <h3>Add New Employee</h3>
         <form onSubmit={this.onSubmit}>
+          <div className="form-group">
+            <label>Company: </label>
+            <select
+              ref="companyInput"
+              required
+              className="form-control"
+              value={this.state.companyName}
+              onChange={this.onChangeCompanyName}
+            >
+              {this.state.companyNames.map(function(company) {
+                return (
+                  <option key={company} value={company}>
+                    {company}
+                  </option>
+                );
+              })}
+            </select>
+          </div>
           <div className="form-group">
             <label>Name: </label>
             <input

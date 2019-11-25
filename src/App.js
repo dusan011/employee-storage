@@ -6,6 +6,7 @@ import Navbar from "./components/navbar.component";
 import EmployeesList from "./components/employees-list.component";
 import AddEmployee from "./components/add-employee.component";
 import EditEmployee from "./components/edit-employee.component";
+import AddCompany from "./components/add-company.component";
 
 function App() {
   return (
@@ -16,6 +17,7 @@ function App() {
         <Route path="/" exact component={EmployeesList} />
         <Route path="/add" exact component={AddEmployee} />
         <Route path="/edit/:id" exact component={EditEmployee} />
+        <Route path="/company" exact component={AddCompany} />
       </div>
     </Router>
   );
